@@ -26,7 +26,7 @@ public class houseSearchDao {
 		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnect();
-			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_price < ? and housedeal_type =?";
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_price < ? and housedeal_type =? order by housedeal_price";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, price);
 			pstmt.setString(2, type);
@@ -56,7 +56,7 @@ public class houseSearchDao {
 		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnect();
-			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_rentmoney < ? and housedeal_type =?";
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_rentmoney < ? and housedeal_type =? order by housedeal_rentmoney";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, price);
 			pstmt.setString(2, type);
@@ -86,7 +86,7 @@ public class houseSearchDao {
 		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnect();
-			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_deposit < ? and housedeal_type =?";
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_deposit < ? and housedeal_type =? order by  housedeal_deposit";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, price);
 			pstmt.setString(2, type);
@@ -116,7 +116,7 @@ public class houseSearchDao {
 		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnect();
-			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_charterprice < ? and housedeal_type =?";
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_charterprice < ? and housedeal_type =? order by  housedeal_charterprice";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, price);
 			pstmt.setString(2, type);
@@ -140,8 +140,6 @@ public class houseSearchDao {
 		}
 		return hlist;
 	}
-	
-	
 	
 	//키워드 검색
 	public List<HouseDealDTO> searchHousedealContain(String keyword) {
