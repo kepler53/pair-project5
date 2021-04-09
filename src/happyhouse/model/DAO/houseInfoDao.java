@@ -14,7 +14,6 @@ public class houseInfoDao {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-
 	//집 정보 등록
 	public int insertHouseInfo(HouseInfoDTO houseInfoDTO) {
 		int result = 0;
@@ -35,7 +34,6 @@ public class houseInfoDao {
 		//추가됐으면 return 1, 아니면 return 0이든 -1이든
 	}
 
-	
 	//집 정보 삭제
 	public int deleteHouseInfo(int houseInfonum) {
 		int result = 0;
@@ -59,7 +57,6 @@ public class houseInfoDao {
 		//삭제됐으면 return 1, 아니면 return 0이든 -1이든
 	}
 	
-
 	//집 정보 업데이트
 	public int updateHouseInfoDTO(HouseInfoDTO houseInfoDTO) {
 		int result = 0;

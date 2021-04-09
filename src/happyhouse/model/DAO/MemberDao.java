@@ -16,7 +16,6 @@ public class MemberDao {
 	private ResultSet rs = null;
 
 	//멤버추가
-	
 	public int insertMember(MemberDTO memberDTO) {
 		int result = 0;
 		try {
@@ -40,7 +39,6 @@ public class MemberDao {
 		return result;
 		//추가됐으면 return 1, 아니면 return 0이든 -1이든
 	}
-	//아니면 return type을 그냥 void로 하기
 	
 	//멤버 삭제
 	public int deleteMember(String userid) {
