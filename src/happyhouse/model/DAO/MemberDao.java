@@ -116,7 +116,29 @@ public class MemberDao {
 		//추가됐으면 return 1, 아니면 return 0이든 -1이든
 	}
 	
+	//관리자 체크
+	public int checkAdmin(String userid) {
+		int result = 0;
+		try {
+			conn = DBUtil.getConnect();
+			String sql = "select admin_type from member_tb where userid = ?";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("관리자를 검색하는 데 실패했습니다.");
+			e.printStackTrace();
+		} finally {
+
+			DBUtil.close(rs, pstmt, conn);
+		}
+		return result;
+		//관리자면 1, 아니면0 서비스에서 checkAdmin을 한 후에 진행
+	}
 	
+	//사용자 리스트 뽑아오기(for 관리자) => service
 
 
 	

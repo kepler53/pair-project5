@@ -16,34 +16,15 @@ public class houseDealDao {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
-	//관리자 체크
-	public int checkAdmin(String userid) {
-		int result = 0;
-		try {
-			conn = DBUtil.getConnect();
-			String sql = "select admin_type from member_tb where userid = ?";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			rs.next();
-			result = rs.getInt(1);
-		} catch (SQLException e) {
-			// TODO: handle exception
-			System.out.println("관리자를 검색하는 데 실패했습니다.");
-			e.printStackTrace();
-		} finally {
 
-			DBUtil.close(rs, pstmt, conn);
-		}
-		return result;
-		//관리자면 1, 아니면0 서비스에서 checkAdmin을 한 후에 진행
-	}
 	
 	//관리자가 등록하는 매물 정보 등록
 	public int insertHouseDeal(int memebernum, int houseinfonum, HouseDealDTO houseDealDTO) {
 		int result = 0;
 		try {
 			conn = DBUtil.getConnect();
-			String sql = "INSERT INTO housedeal_tb(dealdate,hmembernum,hhouseinfonum,housedeal_type,housedeal_price,housedeal_charterprice,housedeal_deposit,housedeal_rentmoney) VALUES(now(),?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO housedeal_tb(dealdate,hmembernum,hhouseinfonum,housedeal_type,housedeal_price,housedeal_charterprice,housedeal_deposit,housedeal_rentmoney,housedeal_city,housedeal_dong,housedeal_name)"
+					+ " VALUES(now(),?,?,?,?,?,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -54,6 +35,9 @@ public class houseDealDao {
 			pstmt.setInt(5, houseDealDTO.getHousdealCharterprice());
 			pstmt.setInt(6, houseDealDTO.getHousedealDeposit());
 			pstmt.setInt(7, houseDealDTO.getHousedeealRentmoney());
+			pstmt.setString(8, houseDealDTO.getCity());
+			pstmt.setString(9, houseDealDTO.getDong());
+			pstmt.setString(10, houseDealDTO.getAptname());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -75,16 +59,19 @@ public class houseDealDao {
 		try {
 			
 			conn = DBUtil.getConnect();
-			String sql = "update houesdeal_tb set dealdate = now(),housedeal_type = ?,housedeal_price =?, housedeal_charterprice =?, housedeal_deposit =?, housedeal_rentmoney =? where hmemebernum =? and hhouseinfonum ";
+			String sql = "update houesdeal_tb set dealdate = now(),housedeal_type = ?,housedeal_price =?, housedeal_charterprice =?, housedeal_deposit =?, housedeal_rentmoney =? housedeal_city =?, housedeal_dong =? ,housedeal_aptname =? where hmemebernum =? and hhouseinfonum =?";
 			
-
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, houseDealDTO.getHousedealType());
 			pstmt.setInt(2, houseDealDTO.getHousedealPrice());
 			pstmt.setInt(3, houseDealDTO.getHousdealCharterprice());
 			pstmt.setInt(4, houseDealDTO.getHousedealDeposit());
 			pstmt.setInt(5, houseDealDTO.getHousedeealRentmoney());
-			pstmt.setInt(6, memebernum);
-			pstmt.setInt(7, houseinfonum);
+			pstmt.setString(6, houseDealDTO.getCity());
+			pstmt.setString(7, houseDealDTO.getDong());
+			pstmt.setString(8, houseDealDTO.getAptname());
+			pstmt.setInt(9, memebernum);
+			pstmt.setInt(10, houseinfonum);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -105,6 +92,7 @@ public class houseDealDao {
 		try {
 			conn = DBUtil.getConnect();
 			String sql = "delete from housedeal_tb where hhousedealnum = ? and hmembernum = ? ";
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(2, membernum);
 			pstmt.setInt(1, housedealnum);
 

@@ -6,6 +6,7 @@ public class preferenceDao {
 	//관심지역 등록
 	
 	
+	
 	//관심지역 삭제
 	
 	

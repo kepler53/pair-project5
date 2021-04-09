@@ -20,21 +20,29 @@ public class houseSearchDao {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	
-	//매매 정보 가격 순 정렬
-	public List<HouseDealDTO> insertMember(MemberDTO memberDTO) {
+	//가격순의 경우 service에서 처리해줘야한다.
+	//매매 정보 가격 순 정렬 
+	public List<HouseDealDTO> searchHousedealPrice(int price, String type) {
 		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnect();
-			String sql = "select ";
-			
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_price < ? and housedeal_type =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, price);
+			pstmt.setString(2, type);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
+				HouseDealDTO houseDealDTO = new HouseDealDTO();
+				houseDealDTO.setDealdate(rs.getDate(1));
+				houseDealDTO.setCity(rs.getString(2));
+				houseDealDTO.setDong(rs.getString(3));
+				houseDealDTO.setHousedealType(rs.getString(4));
 				
+				hlist.add(houseDealDTO);
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
-			System.out.println("회원 추가에 실패했습니다.");
+			System.out.println("검색 결과가 없습니니다.");
 			e.printStackTrace();
 		} finally {
 
@@ -42,5 +50,130 @@ public class houseSearchDao {
 		}
 		return hlist;
 	}
+	
+	//월세 가격 순 정렬 
+	public List<HouseDealDTO> searchHousedealRentmoney(int price, String type) {
+		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnect();
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_rentmoney < ? and housedeal_type =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, price);
+			pstmt.setString(2, type);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				HouseDealDTO houseDealDTO = new HouseDealDTO();
+				houseDealDTO.setDealdate(rs.getDate(1));
+				houseDealDTO.setCity(rs.getString(2));
+				houseDealDTO.setDong(rs.getString(3));
+				houseDealDTO.setHousedealType(rs.getString(4));
+				
+				hlist.add(houseDealDTO);
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("검색 결과가 없습니니다.");
+			e.printStackTrace();
+		} finally {
+
+			DBUtil.close(rs, pstmt, conn);
+		}
+		return hlist;
+	}
+	
+	//월세 정보 보증금 순 정렬 
+	public List<HouseDealDTO> searchHousedealPDeposit(int price, String type) {
+		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnect();
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_deposit < ? and housedeal_type =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, price);
+			pstmt.setString(2, type);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				HouseDealDTO houseDealDTO = new HouseDealDTO();
+				houseDealDTO.setDealdate(rs.getDate(1));
+				houseDealDTO.setCity(rs.getString(2));
+				houseDealDTO.setDong(rs.getString(3));
+				houseDealDTO.setHousedealType(rs.getString(4));
+				
+				hlist.add(houseDealDTO);
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("검색 결과가 없습니니다.");
+			e.printStackTrace();
+		} finally {
+
+			DBUtil.close(rs, pstmt, conn);
+		}
+		return hlist;
+	}
+	
+	//전세 가격 순 정렬 
+	public List<HouseDealDTO> searchHousedealCharterPrice(int price, String type) {
+		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnect();
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_charterprice < ? and housedeal_type =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, price);
+			pstmt.setString(2, type);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				HouseDealDTO houseDealDTO = new HouseDealDTO();
+				houseDealDTO.setDealdate(rs.getDate(1));
+				houseDealDTO.setCity(rs.getString(2));
+				houseDealDTO.setDong(rs.getString(3));
+				houseDealDTO.setHousedealType(rs.getString(4));
+				
+				hlist.add(houseDealDTO);
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("검색 결과가 없습니니다.");
+			e.printStackTrace();
+		} finally {
+
+			DBUtil.close(rs, pstmt, conn);
+		}
+		return hlist;
+	}
+	
+	
+	
+	//키워드 검색
+	public List<HouseDealDTO> searchHousedealContain(String keyword) {
+		ArrayList<HouseDealDTO> hlist = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnect();
+			String sql = "select dealdate, housedeal_city, housedeal_dong, housedeal_aptname from housedeal_tb where housedeal_aptname = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1,"%"+keyword+"%");
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				HouseDealDTO houseDealDTO = new HouseDealDTO();
+				houseDealDTO.setDealdate(rs.getDate(1));
+				houseDealDTO.setCity(rs.getString(2));
+				houseDealDTO.setDong(rs.getString(3));
+				houseDealDTO.setHousedealType(rs.getString(4));
+				
+				hlist.add(houseDealDTO);
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println("검색 결과가 없습니니다.");
+			e.printStackTrace();
+		} finally {
+
+			DBUtil.close(rs, pstmt, conn);
+		}
+		return hlist;
+	}
+	
+	
 
 }

@@ -41,6 +41,29 @@ public class HouseDealDTO {
 	public void setHousedeealRentmoney(int housedeealRentmoney) {
 		this.housedeealRentmoney = housedeealRentmoney;
 	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getAptname() {
+		return aptname;
+	}
+	public void setAptname(String aptname) {
+		this.aptname = aptname;
+	}
+	public String getDong() {
+		return dong;
+	}
+	public void setDong(String dong) {
+		this.dong = dong;
+	}
+	String city;
+	String aptname;
+	String dong;
+	
+	
 	Date dealdate;
 	String housedealType;
 	int housedealPrice;

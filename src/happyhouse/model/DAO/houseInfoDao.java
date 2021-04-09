@@ -66,7 +66,7 @@ public class houseInfoDao {
 		try {
 			conn = DBUtil.getConnect();
 			String sql = "UPDATE houseinfo_tb  SET city =?, dongcode=?,gugun =?, lat=?,lang =?  WHERE houseinfonum = ?";
-			
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, houseInfoDTO.getCity());
 			pstmt.setInt(2,houseInfoDTO.getDongcode());
 			pstmt.setString(3, houseInfoDTO.getGugun());
